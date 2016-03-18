@@ -51,14 +51,12 @@ var getNotes = function(zip, slideFile) {
 
 program.args.forEach(function(pptxFile) {
   var cards = [];
-  console.log(pptxFile);
   fs.readFile(pptxFile, function(err, data) {
     if (err) throw err;
     var zip = new JSZip(data);
     // console.log(zip);
     Object.keys(zip.files).forEach(function(f) {
       if (slideMatch.test(f)) {
-        console.log(f);
         var slideNumber = f.replace("ppt/slides/slide", "").replace(".xml", "");
         var text = extractText(zip.file(f).asText());
         var notesText = getNotes(zip, f);
@@ -70,7 +68,7 @@ program.args.forEach(function(pptxFile) {
       }
     });
     cards.sort(function(a, b) {
-      return a.slide - b.slide
+      return a.slideNumber - b.slideNumber
     });
     jsonfile.writeFileSync(pptxFile + '.json', cards, {
       spaces: 2
