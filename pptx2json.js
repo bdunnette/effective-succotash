@@ -11,7 +11,7 @@ var xpath = require('xpath'),
 
 program.parse(process.argv);
 
-var _calculateExtractedText = function(slideText) {
+var extractText = function(slideText) {
   var doc = new dom().parseFromString(slideText);
   var ps = xpath.select("//*[local-name()='p']", doc);
   var text = "";
@@ -48,7 +48,7 @@ program.args.forEach(function(pptxFile) {
         console.log(f);
         var slide = f.replace("ppt/slides/slide", "").replace(".xml", "");
         var slideText = zip.file(f).asText();
-        var text = _calculateExtractedText(slideText);
+        var text = extractText(slideText);
         // console.log(slideText);
         cards.push({
           slide: slide,
