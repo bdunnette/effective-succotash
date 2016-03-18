@@ -7,7 +7,6 @@ var xpath = require('xpath'),
   path = require('path'),
   program = require('commander'),
   jsonfile = require('jsonfile'),
-  parseString = require('xml2js').parseString,
   slideMatch = /^ppt\/slides\/slide/;
 
 program.parse(process.argv);
@@ -34,17 +33,15 @@ var extractText = function(slideText) {
   });
 
   return text;
-
 };
 
 var getNotes = function(zip, slideFile) {
   var relsText = zip.file(slideFile.replace("ppt/slides", "ppt/slides/_rels") + ".rels").asText();
-  console.log(relsText);
   var doc = new dom().parseFromString(relsText);
   var notesSlide = xpath.select("//*[@Type='http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesSlide']/@Target", doc)[0];
   if (notesSlide) {
     // return an absolute path within the zipfile rather than a relative path
-    var notesPath = notesSlide.value.replace('..','ppt');
+    var notesPath = notesSlide.value.replace('..', 'ppt');
     var notesText = extractText(zip.file(notesPath).asText());
     return notesText;
   } else {
@@ -72,7 +69,9 @@ program.args.forEach(function(pptxFile) {
         });
       }
     });
-    cards.sort(function(a,b){return a.slide - b.slide});
+    cards.sort(function(a, b) {
+      return a.slide - b.slide
+    });
     jsonfile.writeFileSync(pptxFile + '.json', cards, {
       spaces: 2
     });

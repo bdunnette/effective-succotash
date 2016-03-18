@@ -1,10 +1,12 @@
 {
   "name": "ppt2anki-poc",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bdunnette/effective-succotash.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bdunnette/effective-succotash/issues"
   },
   "author": "Brian Dunnette <dunn0172@umn.edu>",
   "license": "MIT",
@@ -13,7 +15,6 @@
     "jsonfile": "^2.2.3",
     "jszip": "^2.5.0",
     "sqlite3": "^3.1.1",
-    "xml2js": "^0.4.16",
     "xmldom": "^0.1.22",
     "xpath": "0.0.22"
   }
